@@ -1,0 +1,7 @@
+# my-analysis.qls
+- description: Security queries plus alert suppression
+- queries: .
+- apply: cpp-security-extended-selectors.yml
+  from: codeql/cpp-queries
+- include:
+    kind: alert-suppression
