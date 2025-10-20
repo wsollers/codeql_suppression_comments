@@ -29,6 +29,7 @@ sudo apt-get install -y clang make git curl unzip jq
 ├── run-codeql.sh         # Runs CodeQL analysis
 ├── AlertSuppression.ql   # Custom suppression query
 ├── qlpack.yml            # Query pack definition for custom query
+├── runAnalysis.sh        # Wrapper around the entire process
 └── README.md             # This file
 ```
 

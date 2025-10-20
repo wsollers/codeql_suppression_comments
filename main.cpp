@@ -2,12 +2,40 @@
 #include <cstring>
 #include <cstdlib>
 #include <fstream>
+#include <cstdio>
+
+void testy () {
+    int a = 10;
+    int b = 0;
+    // lgtm[cpp/unused-local-variable]
+    int x = a / b;
+
+    // codeql[cpp/divide-by-zero]
+    int c = 20;
+    int d = 0;
+    // codeql[cpp/unused-local-variable]
+    int y = c / d;
+
+    
+    char buffer[256];
+    // gsec[cpp/unused-local-variable]
+    char* ptr = fgets(buffer, sizeof(buffer), stdin);
+
+    // All three formats work on the same line too
+    int e = 30, f = 0;
+    int g = 40, h = 0;
+    int i = 50, j = 0;
+    int z = e / f; // lgtm[unused-local-variable]
+    int w = g / h; // codeql[unused-local-variable]
+    int v = i / j; // gsec[unused-local-variable]
+    printf("Values: \n");
+}
 
 // Function with buffer overflow vulnerability
 void copyUserInput(const char* input) {
     char buffer[10];
     // Unsafe: no bounds checking - CodeQL will alert
-    strcpy(buffer, input); // lgtm[cpp/unbounded-write]
+    strcpy(buffer, input); // codeql[cpp/unbounded-write]
     std::cout << "Copied: " << buffer << std::endl;
 }
 
@@ -15,7 +43,7 @@ void copyUserInput(const char* input) {
 void copyUserInputSuppressed(const char* input) {
     char buffer[10];
     
-    strcpy(buffer, input); // lgtm[cpp/unbounded-write]
+    strcpy(buffer, input); // gsec[cpp/unbounded-write]
     std::cout << "Copied (suppressed): " << buffer << std::endl;
 }
 
@@ -97,6 +125,8 @@ void readFile(const char* filename) {
 int main(int argc, char* argv[]) {
     std::cout << "CodeQL C++ Test Program" << std::endl;
     
+    testy();
+
     // These will trigger alerts
     if (argc > 1) {
         copyUserInput(argv[1]);
